@@ -14,6 +14,8 @@
     @media(max-width:680px){.table-wrap table{display:block;min-width:0;width:100%;white-space:normal}.table-wrap thead{display:none}.table-wrap tbody{display:block}.table-wrap tbody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 12px;padding:10px 14px;border-bottom:1px solid var(--line)}.table-wrap tbody td{min-width:0;padding:5px 0;border:0;white-space:normal;overflow-wrap:anywhere;font-size:11px}.table-wrap tbody td:before{content:attr(data-label);display:block;color:#8c948c;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}.table-wrap tbody td[data-label="Description"],.table-wrap tbody td[data-label="Owner's note"]{grid-column:1/-1}.table-wrap tbody td .customer-cell{font-size:11px}.table-wrap tbody td .mini-avatar{width:25px;height:25px}}
     .statement-download{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;white-space:nowrap}.statement-download .download-icon{font-size:17px;line-height:10px}
     @media(max-width:680px){.statement-download{height:34px;padding:5px 9px}.statement-download .download-label{display:none}}
+    .delete-button{border:0;background:transparent;color:#985345;font-size:11px;padding:5px 7px;border-radius:3px;text-decoration:underline;text-underline-offset:3px}.delete-button:hover{background:#f8eae6;color:#783b31}
+    @media(max-width:680px){.table-wrap tbody td[data-label="Actions"]{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
   </style>
 </head>
@@ -120,6 +122,7 @@
         const query = event.target.value;
         const cursor = event.target.selectionStart;
         renderCustomers(query);
+        addDeleteControls('customers-view', 'customer', data.customers.filter(customer => [customer.name, customer.phone, customer.location, customer.note].join(' ').toLowerCase().includes(query.toLowerCase())));
         const search = document.getElementById('customer-search');
         search.focus();
         search.setSelectionRange(cursor, cursor);
@@ -139,6 +142,53 @@
       document.getElementById('expenses-view').innerHTML = `<div class="page-heading"><div><div class="eyebrow">Every rupee has a place</div><h1>Expense book</h1><p>Record the running costs behind every good cup.</p></div><div class="actions"><button class="button" data-action="add-expense">+ Add expense</button></div></div><div class="summary-strip"><div class="summary-item"><span>This month</span><strong>${money(sum(current))}</strong></div><i class="summary-divider"></i><div class="summary-item"><span>Entries</span><strong>${current.length}</strong></div><i class="summary-divider"></i><div class="summary-item"><span>Categories</span><strong>${categories.size}</strong></div></div><section class="table-panel"><div class="table-title"><h2>All expenses</h2><span class="count">${list.length} ${list.length === 1 ? 'entry' : 'entries'}</span></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Category</th><th>Description</th><th>Amount</th></tr></thead><tbody>${list.length ? list.map(item => `<tr><td data-label="Date">${niceDate(item.date)}</td><td data-label="Category"><span class="status">${escapeHtml(item.category)}</span></td><td data-label="Description">${escapeHtml(item.description)}</td><td class="amount" data-label="Amount">${money(item.amount)}</td></tr>`).join('') : '<tr><td colspan="4" class="empty-state">No expenses recorded yet.</td></tr>'}</tbody></table></div></section>`;
     }
 
+    function addDeleteControls(viewId, type, entries) {
+      const table = document.querySelector(`#${viewId} .table-wrap table`);
+      if (!table) return;
+      const heading = document.createElement('th');
+      heading.scope = 'col';
+      heading.textContent = 'Actions';
+      table.tHead.rows[0].append(heading);
+      Array.from(table.tBodies[0].rows).forEach((row, index) => {
+        if (!entries[index] || row.querySelector('.empty-state')) return;
+        const cell = row.insertCell();
+        cell.dataset.label = 'Actions';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'delete-button';
+        button.dataset.deleteType = type;
+        button.dataset.deleteId = entries[index].id;
+        button.textContent = 'Delete';
+        button.setAttribute('aria-label', `Delete ${type}`);
+        cell.append(button);
+      });
+    }
+
+    function deleteEntry(type, id) {
+      if (type === 'customer') {
+        const customer = data.customers.find(item => item.id === id);
+        if (!customer) return;
+        const linkedSales = data.sales.filter(sale => sale.customerId === id);
+        const linkedMessage = linkedSales.length ? ` This will also delete ${linkedSales.length} linked ${linkedSales.length === 1 ? 'sale' : 'sales'}.` : '';
+        if (!window.confirm(`Delete ${customer.name}?${linkedMessage} This cannot be undone.`)) return;
+        data.customers = data.customers.filter(item => item.id !== id);
+        data.sales = data.sales.filter(sale => sale.customerId !== id);
+      } else if (type === 'sale') {
+        const sale = data.sales.find(item => item.id === id);
+        if (!sale || !window.confirm(`Delete this sale for ${customerName(sale.customerId)} (${money(sale.amount)})? This cannot be undone.`)) return;
+        data.sales = data.sales.filter(item => item.id !== id);
+      } else if (type === 'expense') {
+        const expense = data.expenses.find(item => item.id === id);
+        if (!expense || !window.confirm(`Delete expense "${expense.description}" (${money(expense.amount)})? This cannot be undone.`)) return;
+        data.expenses = data.expenses.filter(item => item.id !== id);
+      } else {
+        return;
+      }
+      save();
+      render();
+      showToast(`${type[0].toUpperCase()}${type.slice(1)} deleted`);
+    }
+
     function render() {
       const route = location.hash.slice(1) || 'overview';
       const active = ['overview', 'customers', 'sales', 'expenses'].includes(route) ? route : 'overview';
@@ -146,9 +196,19 @@
       document.querySelectorAll('[data-route]').forEach(link => link.classList.toggle('active', link.dataset.route === active));
       document.getElementById('route-label').textContent = active[0].toUpperCase() + active.slice(1);
       if (active === 'overview') renderOverview();
-      if (active === 'customers') renderCustomers(document.getElementById('customer-search')?.value || '');
-      if (active === 'sales') renderSales();
-      if (active === 'expenses') renderExpenses();
+      if (active === 'customers') {
+        const query = document.getElementById('customer-search')?.value || '';
+        renderCustomers(query);
+        addDeleteControls('customers-view', 'customer', data.customers.filter(customer => [customer.name, customer.phone, customer.location, customer.note].join(' ').toLowerCase().includes(query.toLowerCase())));
+      }
+      if (active === 'sales') {
+        renderSales();
+        addDeleteControls('sales-view', 'sale', [...data.sales].sort((a, b) => b.date.localeCompare(a.date)));
+      }
+      if (active === 'expenses') {
+        renderExpenses();
+        addDeleteControls('expenses-view', 'expense', [...data.expenses].sort((a, b) => b.date.localeCompare(a.date)));
+      }
     }
 
     function openModal(type) {
@@ -204,6 +264,11 @@
       setTimeout(() => { root.innerHTML = ''; }, 2600);
     }
     document.addEventListener('click', event => {
+      const deleteButton = event.target.closest('[data-delete-type]');
+      if (deleteButton) {
+        deleteEntry(deleteButton.dataset.deleteType, deleteButton.dataset.deleteId);
+        return;
+      }
       const action = event.target.closest('[data-action]')?.dataset.action;
       if (action) openModal(action.replace('add-', ''));
       if (event.target.matches('[data-close-modal]')) document.getElementById('modal-root').innerHTML = '';
