@@ -3,318 +3,188 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculator</title>
+  <meta name="theme-color" content="#203d31" />
+  <title>ROYAL SULTHAN | Monica Tea Ledger</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #000000;
-      font-family: 'Inter', 'Segoe UI', sans-serif;
-    }
-
-    .calculator {
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 28px;
-      padding: 28px;
-      box-shadow:
-        0 32px 80px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      width: 340px;
-    }
-
-    .display {
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 18px;
-      padding: 20px 18px 14px;
-      margin-bottom: 22px;
-      text-align: right;
-      min-height: 100px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    .display .expression {
-      color: rgba(255, 255, 255, 0.55);
-      font-size: 14px;
-      font-weight: 400;
-      min-height: 20px;
-      word-break: break-all;
-      letter-spacing: 0.3px;
-    }
-
-    .display .result {
-      color: #ffffff;
-      font-size: 40px;
-      font-weight: 300;
-      word-break: break-all;
-      line-height: 1.2;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      letter-spacing: -1px;
-    }
-
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 13px;
-    }
-
-    button {
-      border: none;
-      border-radius: 16px;
-      padding: 19px 0;
-      font-size: 18px;
-      font-family: inherit;
-      cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
-      font-weight: 500;
-      letter-spacing: 0.2px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    button::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255, 255, 255, 0);
-      transition: background 0.15s;
-      border-radius: inherit;
-    }
-
-    button:hover::after {
-      background: rgba(255, 255, 255, 0.12);
-    }
-
-    button:active {
-      transform: scale(0.91);
-      box-shadow: none !important;
-    }
-
-    .btn-number {
-      background: rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-operator {
-      background: linear-gradient(145deg, #a78bfa, #7c3aed);
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.45);
-      border: 1px solid rgba(167, 139, 250, 0.3);
-    }
-
-    .btn-action {
-      background: rgba(255, 255, 255, 0.22);
-      color: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-equals {
-      background: linear-gradient(145deg, #f093fb, #f5576c);
-      color: #fff;
-      grid-column: span 2;
-      box-shadow: 0 4px 24px rgba(245, 87, 108, 0.5);
-      border: 1px solid rgba(240, 147, 251, 0.3);
-      font-size: 22px;
-    }
-
-    .btn-zero {
-      grid-column: span 2;
-      text-align: left;
-      padding-left: 26px;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+    :root{--forest:#203d31;--forest-2:#315644;--paper:#f5f3ed;--white:#fffefa;--ink:#202c25;--muted:#7a827c;--line:#e7e5dc;--gold:#c99c4b;--red:#a34f3f;--pale-green:#e9efe8;--shadow:0 12px 35px rgba(29,47,37,.06)}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.shell{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:244px;background:var(--forest);color:#f6f5ec;padding:27px 17px;display:flex;flex-direction:column;z-index:5}.brand{display:flex;align-items:center;gap:12px;padding:0 9px 31px;border-bottom:1px solid rgba(255,255,255,.13)}.brand-mark{width:38px;height:38px;border:1px solid rgba(217,184,119,.75);color:#dfc184;display:grid;place-items:center;font-family:'Playfair Display',serif;font-size:17px;transform:rotate(-4deg)}.brand-name{font-weight:700;letter-spacing:1.6px;font-size:12px}.brand-sub{color:#b3c1b6;font-size:11px;margin-top:4px}.nav-label{margin:29px 11px 11px;color:#9ead9f;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}.nav{display:grid;gap:5px}.nav-link{display:flex;align-items:center;gap:12px;padding:12px 13px;color:#d1d9d1;border-radius:5px;font-size:13px;transition:background .2s,color .2s}.nav-link:hover,.nav-link.active{background:#365747;color:#fff}.nav-icon{width:19px;text-align:center;font-size:16px;color:#d0b16f}.sidebar-bottom{margin-top:auto;border-top:1px solid rgba(255,255,255,.13);padding:17px 9px 0;color:#afbbb0;font-size:11px;line-height:1.7}.sidebar-bottom strong{display:block;color:#f4f1e8;font-family:'Playfair Display',serif;font-size:15px;font-weight:500}.main{margin-left:244px;min-height:100vh}.topbar{height:72px;padding:0 43px;background:rgba(255,254,250,.78);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:4;backdrop-filter:blur(14px)}.crumb{font-size:12px;color:var(--muted)}.crumb b{font-weight:600;color:var(--ink)}.top-right{display:flex;align-items:center;gap:12px}.today{font-size:12px;color:var(--muted)}.avatar{width:34px;height:34px;border-radius:50%;background:#dce6db;color:var(--forest);display:grid;place-items:center;font-weight:700;font-size:11px}.content{max-width:1440px;margin:auto;padding:36px 43px 55px}.page-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px;animation:rise .45s ease both}.eyebrow{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:#9b7636;font-weight:700;margin-bottom:8px}.page-heading h1{font-family:'Playfair Display',serif;font-size:32px;line-height:1.15;font-weight:600;margin:0;letter-spacing:0}.page-heading p{margin:8px 0 0;color:var(--muted);font-size:13px}.actions{display:flex;gap:9px;flex-wrap:wrap}.button{border:1px solid transparent;background:var(--forest);color:#fff;border-radius:4px;padding:10px 15px;font-size:12px;font-weight:600;transition:background .18s,transform .18s}.button:hover{background:#315644;transform:translateY(-1px)}.button.secondary{background:transparent;border-color:#d9d8ce;color:var(--ink)}.button.secondary:hover{background:#fff}.button.light{background:#edf1eb;color:var(--forest)}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:19px;animation:rise .5s .04s ease both}.metric{background:var(--white);border:1px solid var(--line);padding:19px 19px 16px;min-height:114px;position:relative}.metric:before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:#b89553}.metric-label{color:var(--muted);font-size:11px}.metric-value{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;margin-top:10px;letter-spacing:0}.metric-note{font-size:10px;color:#859087;margin-top:5px}.overview-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.8fr);gap:16px}.panel{background:var(--white);border:1px solid var(--line);min-width:0}.panel-head{padding:17px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head h2{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;margin:0}.panel-head a,.text-link{color:#8b6b32;font-size:11px;font-weight:600}.panel-body{padding:19px 20px}.chart-meta{display:flex;justify-content:space-between;align-items:baseline}.chart-total{font-family:'Playfair Display',serif;font-size:25px}.chart-caption{color:var(--muted);font-size:11px}.chart{height:178px;margin-top:19px;display:flex;align-items:flex-end;gap:clamp(8px,2vw,20px);padding:0 5px 24px;border-bottom:1px solid var(--line);position:relative}.chart:before,.chart:after{content:'';position:absolute;left:0;right:0;border-top:1px dashed #eeece5}.chart:before{top:33%}.chart:after{top:66%}.bar-group{height:100%;flex:1;display:flex;align-items:flex-end;justify-content:center;position:relative;z-index:1}.bar{width:min(25px,65%);height:var(--height);background:#b4c5b3;border-radius:2px 2px 0 0;transition:height .5s ease}.bar.current{background:var(--forest-2)}.bar-label{position:absolute;bottom:-21px;color:#929991;font-size:10px}.mix-list{display:grid;gap:19px}.mix-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:7px}.mix-label{display:flex;align-items:center;gap:8px}.dot{width:8px;height:8px;border-radius:50%;background:var(--forest-2)}.dot.gold{background:var(--gold)}.dot.rose{background:#b87360}.mix-value{font-weight:600}.mix-track{height:5px;background:#efeee8}.mix-fill{height:100%;background:var(--forest-2);width:var(--width)}.mix-fill.gold{background:var(--gold)}.mix-fill.rose{background:#b87360}.lower-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.8fr);gap:16px;margin-top:16px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;white-space:nowrap}th{text-align:left;font-size:10px;color:#8c948c;font-weight:600;text-transform:uppercase;letter-spacing:.8px;padding:12px 18px;border-bottom:1px solid var(--line)}td{padding:13px 18px;border-bottom:1px solid #f0eee7;font-size:12px}tr:last-child td{border-bottom:0}.customer-cell{display:flex;align-items:center;gap:10px}.mini-avatar{width:29px;height:29px;border-radius:50%;display:grid;place-items:center;background:#edf1e9;color:var(--forest);font-size:10px;font-weight:700;flex:none}.muted{color:var(--muted)}.amount{font-weight:600}.status{display:inline-block;padding:4px 8px;border-radius:20px;font-size:10px;background:#e8f0e8;color:#426447}.status.pending{background:#f8eee1;color:#987034}.product-spotlight{background:var(--forest);color:#f8f5e9;min-height:178px;display:flex;position:relative;overflow:hidden}.product-copy{position:relative;z-index:1;padding:22px;max-width:70%}.product-copy .eyebrow{color:#d5bb7f}.product-copy h2{font-family:'Playfair Display',serif;font-size:21px;line-height:1.2;margin:0 0 7px;font-weight:500}.product-copy p{color:#c3cec3;font-size:11px;line-height:1.6;margin:0}.tea-tin{position:absolute;right:20px;bottom:18px;width:68px;height:112px;background:linear-gradient(90deg,#c1a05f,#e3c786 48%,#ae8844);border-radius:5px 5px 8px 8px;box-shadow:8px 10px 20px #10271d80;transform:rotate(4deg)}.tea-tin:before{content:'';position:absolute;top:-6px;left:-3px;width:74px;height:12px;border-radius:3px;background:#d5b773;border:1px solid #a98243}.tin-label{position:absolute;top:34px;left:5px;right:5px;height:48px;background:#203d31;color:#efdeb1;text-align:center;padding-top:7px;font-family:'Playfair Display',serif;font-size:9px;line-height:1.2;border-top:1px solid #e0c47c;border-bottom:1px solid #e0c47c}.tin-label small{display:block;font-family:'DM Sans',sans-serif;font-size:6px;letter-spacing:1px;margin-bottom:3px}.quick-note{margin-top:15px;background:#f4f2eb;border-left:3px solid #c7a054;padding:13px 14px;color:#67726a;font-size:11px;line-height:1.65}.quick-note strong{display:block;color:var(--ink);font-size:11px;margin-bottom:3px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.search{position:relative;max-width:320px;flex:1}.search input{width:100%;height:38px;padding:0 12px 0 35px;border:1px solid #deddd3;background:var(--white);outline:none;border-radius:3px;font-size:12px}.search input:focus,.field input:focus,.field select:focus,.field textarea:focus{border-color:#7d997e;box-shadow:0 0 0 3px #e8eee7}.search span{position:absolute;left:12px;top:10px;color:#929991}.filter-select{height:38px;border:1px solid #deddd3;background:var(--white);padding:0 11px;border-radius:3px;color:#5d685f;font-size:12px}.table-panel{background:var(--white);border:1px solid var(--line)}.table-title{display:flex;align-items:center;justify-content:space-between;padding:17px 19px;border-bottom:1px solid var(--line)}.table-title h2{font-family:'Playfair Display',serif;font-size:17px;margin:0;font-weight:600}.count{font-size:11px;color:var(--muted)}.note-cell{max-width:260px;overflow:hidden;text-overflow:ellipsis;color:#6f7971}.empty-state{padding:38px;text-align:center;color:var(--muted);font-size:12px}.page-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:18px}.summary-strip{display:flex;align-items:center;gap:28px;background:#e9eee7;border-left:3px solid #66816a;padding:15px 19px;margin-bottom:18px}.summary-item span{display:block;color:#68756a;font-size:10px;margin-bottom:4px}.summary-item strong{font-size:17px;font-family:'Playfair Display',serif}.summary-divider{height:32px;width:1px;background:#d1dbd0}.route-view{animation:rise .35s ease both}.hidden{display:none!important}.modal-backdrop{position:fixed;inset:0;background:rgba(20,34,26,.52);display:grid;place-items:center;padding:20px;z-index:20;animation:fade .2s ease}.modal{width:min(100%,480px);background:var(--white);box-shadow:0 22px 70px #14251c40;animation:rise .25s ease}.modal-head{display:flex;justify-content:space-between;align-items:center;padding:19px 22px;border-bottom:1px solid var(--line)}.modal-head h2{font-family:'Playfair Display',serif;font-size:21px;margin:0}.close-button{border:0;background:none;color:#68736a;font-size:23px;line-height:1;padding:0 3px}.modal-form{padding:20px 22px 22px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;color:#647066;font-weight:600}.field input,.field select,.field textarea{border:1px solid #deddd3;background:#fffefa;border-radius:3px;padding:10px 11px;outline:none;font-size:12px;color:var(--ink);width:100%}.field textarea{min-height:84px;resize:vertical}.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:19px}.toast{position:fixed;right:22px;bottom:22px;background:var(--forest);color:#fff;padding:12px 16px;font-size:12px;box-shadow:var(--shadow);z-index:30;animation:rise .2s ease}.mobile-brand{display:none}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes fade{from{opacity:0}to{opacity:1}}
+    @media(max-width:1050px){.content{padding:30px 26px}.topbar{padding:0 26px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.overview-grid,.lower-grid{grid-template-columns:1fr}.product-spotlight{min-height:160px}}
+    @media(max-width:680px){.sidebar{inset:auto 0 0;width:100%;height:64px;padding:5px 8px;flex-direction:row;justify-content:center}.brand,.nav-label,.sidebar-bottom{display:none}.nav{width:100%;grid-template-columns:repeat(4,1fr);gap:3px}.nav-link{height:54px;padding:5px 2px;flex-direction:column;gap:2px;justify-content:center;font-size:9px}.nav-icon{font-size:16px}.main{margin-left:0;padding-bottom:64px}.topbar{height:58px;padding:0 17px}.content{padding:25px 16px 32px}.page-heading{align-items:flex-start;flex-direction:column;margin-bottom:19px}.page-heading h1{font-size:29px}.page-heading p{font-size:12px}.actions{width:100%}.actions .button{flex:1}.metrics{gap:9px}.metric{padding:14px;min-height:100px}.metric-value{font-size:23px}.overview-grid,.lower-grid{gap:12px}.panel-head,.panel-body{padding-left:15px;padding-right:15px}.chart{gap:7px}.bar{width:min(20px,70%)}.toolbar{align-items:stretch;flex-wrap:wrap}.search{max-width:none;flex-basis:100%}.summary-strip{gap:14px;justify-content:space-between;padding:12px}.summary-item strong{font-size:15px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.today{display:none}.table-title{padding:15px}.table-panel table{min-width:650px}.panel table{min-width:570px}}
+    @media(max-width:680px){.table-wrap table{display:block;min-width:0;width:100%;white-space:normal}.table-wrap thead{display:none}.table-wrap tbody{display:block}.table-wrap tbody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 12px;padding:10px 14px;border-bottom:1px solid var(--line)}.table-wrap tbody td{min-width:0;padding:5px 0;border:0;white-space:normal;overflow-wrap:anywhere;font-size:11px}.table-wrap tbody td:before{content:attr(data-label);display:block;color:#8c948c;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}.table-wrap tbody td[data-label="Description"],.table-wrap tbody td[data-label="Owner's note"]{grid-column:1/-1}.table-wrap tbody td .customer-cell{font-size:11px}.table-wrap tbody td .mini-avatar{width:25px;height:25px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
-
-<div class="calculator" role="application" aria-label="Calculator">
-  <div class="display">
-    <div class="expression" id="expression" aria-live="polite"></div>
-    <div class="result" id="result" aria-live="assertive">0</div>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="ROYAL SULTHAN overview"><span class="brand-mark">RS</span><span><span class="brand-name">ROYAL SULTHAN</span><span class="brand-sub">FOODS · OWNER DESK</span></span></a>
+      <div class="nav-label">Business</div>
+      <nav class="nav" aria-label="Main navigation">
+        <a class="nav-link" href="#overview" data-route="overview"><span class="nav-icon">⌂</span>Overview</a>
+        <a class="nav-link" href="#customers" data-route="customers"><span class="nav-icon">♙</span>Customers</a>
+        <a class="nav-link" href="#sales" data-route="sales"><span class="nav-icon">↗</span>Sales</a>
+        <a class="nav-link" href="#expenses" data-route="expenses"><span class="nav-icon">↘</span>Expenses</a>
+      </nav>
+      <div class="sidebar-bottom"><strong>Monica Premium</strong>Tea Powder<br />Owner ledger · 2026</div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="crumb">ROYAL SULTHAN <span aria-hidden="true">/</span> <b id="route-label">Overview</b></div><div class="top-right"><span class="today" id="today"></span><span class="avatar" aria-label="Owner">RS</span></div></header>
+      <div class="content">
+        <section class="route-view" data-view="overview" id="overview-view"></section>
+        <section class="route-view hidden" data-view="customers" id="customers-view"></section>
+        <section class="route-view hidden" data-view="sales" id="sales-view"></section>
+        <section class="route-view hidden" data-view="expenses" id="expenses-view"></section>
+      </div>
+    </main>
   </div>
+  <div id="modal-root"></div>
+  <div id="toast-root" aria-live="polite"></div>
+  <script>
+    const STORE_KEY = 'royalSulthanLedgerV1';
+    const currency = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+    const day = new Date();
+    const isoDate = (date = new Date()) => {
+      const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+      return local.toISOString().slice(0, 10);
+    };
+    const seedData = {
+      customers: [
+        { id: 'c1', name: 'Green Valley Stores', phone: '98765 43210', location: 'Kochi', note: 'Prefers 1 kg packs. Call before Friday delivery.', created: '2026-09-22' },
+        { id: 'c2', name: 'Nila Tea Corner', phone: '98470 21846', location: 'Thrissur', note: 'Regular weekly order; ask for proprietor Anil.', created: '2026-09-18' },
+        { id: 'c3', name: 'The Morning Cup', phone: '98950 66132', location: 'Calicut', note: 'Interested in a trial carton of Monica Premium.', created: '2026-09-12' },
+        { id: 'c4', name: 'Malabar Mini Mart', phone: '94472 35790', location: 'Kannur', note: 'Invoice to purchasing desk. Payment by bank transfer.', created: '2026-09-07' }
+      ],
+      sales: [
+        { id: 's1', customerId: 'c1', date: '2026-09-29', product: 'Monica Premium Tea Powder · 1 kg', quantity: 12, amount: 8400, payment: 'Paid' },
+        { id: 's2', customerId: 'c2', date: '2026-09-28', product: 'Monica Premium Tea Powder · 500 g', quantity: 18, amount: 8100, payment: 'Paid' },
+        { id: 's3', customerId: 'c3', date: '2026-09-27', product: 'Monica Premium Tea Powder · 1 kg', quantity: 6, amount: 4200, payment: 'Pending' },
+        { id: 's4', customerId: 'c4', date: '2026-09-25', product: 'Monica Premium Tea Powder · 250 g', quantity: 24, amount: 6000, payment: 'Paid' },
+        { id: 's5', customerId: 'c1', date: '2026-09-19', product: 'Monica Premium Tea Powder · 500 g', quantity: 10, amount: 4500, payment: 'Paid' }
+      ],
+      expenses: [
+        { id: 'e1', date: '2026-09-29', category: 'Packaging', description: 'Printed Monica pouches', amount: 3200 },
+        { id: 'e2', date: '2026-09-27', category: 'Delivery', description: 'Local wholesale deliveries', amount: 1450 },
+        { id: 'e3', date: '2026-09-24', category: 'Stock purchase', description: 'Tea leaves · September lot', amount: 8700 },
+        { id: 'e4', date: '2026-09-20', category: 'Utilities', description: 'Packing unit electricity', amount: 980 }
+      ]
+    };
+    let data;
+    try { data = JSON.parse(localStorage.getItem(STORE_KEY)) || seedData; } catch { data = seedData; }
+    const save = () => localStorage.setItem(STORE_KEY, JSON.stringify(data));
+    const escapeHtml = (value = '') => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+    const money = value => currency.format(Number(value) || 0);
+    const niceDate = value => new Date(`${value}T00:00:00`).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    const customerName = id => data.customers.find(customer => customer.id === id)?.name || 'Walk-in customer';
+    const monthSales = () => data.sales.filter(sale => sale.date.slice(0, 7) === isoDate().slice(0, 7));
+    const monthExpenses = () => data.expenses.filter(expense => expense.date.slice(0, 7) === isoDate().slice(0, 7));
+    const sum = entries => entries.reduce((total, item) => total + Number(item.amount || 0), 0);
+    const initials = name => name.split(/\s+/).slice(0, 2).map(part => part[0] || '').join('').toUpperCase();
+    document.getElementById('today').textContent = day.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
 
-  <div class="buttons">
-    <!-- Row 1 -->
-    <button class="btn-action" onclick="clearAll()" aria-label="Clear all">AC</button>
-    <button class="btn-action" onclick="toggleSign()" aria-label="Toggle sign">+/-</button>
-    <button class="btn-action" onclick="percent()" aria-label="Percent">%</button>
-    <button class="btn-operator" onclick="inputOperator('/')" aria-label="Divide">÷</button>
-
-    <!-- Row 2 -->
-    <button class="btn-number" onclick="inputDigit('7')">7</button>
-    <button class="btn-number" onclick="inputDigit('8')">8</button>
-    <button class="btn-number" onclick="inputDigit('9')">9</button>
-    <button class="btn-operator" onclick="inputOperator('*')" aria-label="Multiply">×</button>
-
-    <!-- Row 3 -->
-    <button class="btn-number" onclick="inputDigit('4')">4</button>
-    <button class="btn-number" onclick="inputDigit('5')">5</button>
-    <button class="btn-number" onclick="inputDigit('6')">6</button>
-    <button class="btn-operator" onclick="inputOperator('-')" aria-label="Subtract">−</button>
-
-    <!-- Row 4 -->
-    <button class="btn-number" onclick="inputDigit('1')">1</button>
-    <button class="btn-number" onclick="inputDigit('2')">2</button>
-    <button class="btn-number" onclick="inputDigit('3')">3</button>
-    <button class="btn-operator" onclick="inputOperator('+')" aria-label="Add">+</button>
-
-    <!-- Row 5 -->
-    <button class="btn-number btn-zero" onclick="inputDigit('0')">0</button>
-    <button class="btn-number" onclick="inputDecimal()">.</button>
-    <button class="btn-equals" onclick="calculate()" aria-label="Equals">=</button>
-  </div>
-</div>
-
-<script>
-  let currentValue = '0';
-  let previousValue = '';
-  let operator = null;
-  let waitingForOperand = false;
-  let expression = '';
-
-  const resultEl = document.getElementById('result');
-  const expressionEl = document.getElementById('expression');
-
-  function updateDisplay() {
-    resultEl.textContent = currentValue;
-    expressionEl.textContent = expression;
-  }
-
-  function inputDigit(digit) {
-    if (waitingForOperand) {
-      currentValue = digit;
-      waitingForOperand = false;
-    } else {
-      currentValue = currentValue === '0' ? digit : currentValue + digit;
-    }
-    updateDisplay();
-  }
-
-  function inputDecimal() {
-    if (waitingForOperand) {
-      currentValue = '0.';
-      waitingForOperand = false;
-      updateDisplay();
-      return;
-    }
-    if (!currentValue.includes('.')) {
-      currentValue += '.';
-    }
-    updateDisplay();
-  }
-
-  function inputOperator(op) {
-    const current = parseFloat(currentValue);
-
-    if (operator && !waitingForOperand) {
-      const result = compute(parseFloat(previousValue), current, operator);
-      currentValue = formatResult(result);
-      previousValue = currentValue;
-    } else {
-      previousValue = currentValue;
+    function renderOverview() {
+      const sales = monthSales();
+      const expenses = monthExpenses();
+      const salesTotal = sum(sales);
+      const expenseTotal = sum(expenses);
+      const pending = sales.filter(sale => sale.payment === 'Pending');
+      const recent = [...data.sales].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 4);
+      const months = Array.from({ length: 6 }, (_, index) => {
+        const date = new Date(day.getFullYear(), day.getMonth() - (5 - index), 1);
+        const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        return { label: date.toLocaleDateString('en', { month: 'short' }), amount: sum(data.sales.filter(sale => sale.date.startsWith(key))) };
+      });
+      const max = Math.max(...months.map(item => item.amount), 1);
+      document.getElementById('overview-view').innerHTML = `
+        <div class="page-heading"><div><div class="eyebrow">Owner's desk · ${day.toLocaleDateString('en', { month: 'long', year: 'numeric' })}</div><h1>Good business starts here.</h1><p>Your Monica Premium ledger at a glance.</p></div><div class="actions"><button class="button secondary" data-action="add-customer">+ Customer note</button><button class="button" data-action="add-sale">+ Record sale</button></div></div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-label">Sales this month</div><div class="metric-value">${money(salesTotal)}</div><div class="metric-note">${sales.length} recorded orders</div></div>
+          <div class="metric"><div class="metric-label">Expenses this month</div><div class="metric-value">${money(expenseTotal)}</div><div class="metric-note">Across ${new Set(expenses.map(item => item.category)).size} expense categories</div></div>
+          <div class="metric"><div class="metric-label">Net after expenses</div><div class="metric-value">${money(salesTotal - expenseTotal)}</div><div class="metric-note">Sales less recorded expenses</div></div>
+          <div class="metric"><div class="metric-label">To collect</div><div class="metric-value">${money(sum(pending))}</div><div class="metric-note">${pending.length} unpaid ${pending.length === 1 ? 'invoice' : 'invoices'}</div></div>
+        </div>
+        <div class="overview-grid">
+          <section class="panel"><div class="panel-head"><h2>Sales rhythm</h2><a href="#sales">All sales →</a></div><div class="panel-body"><div class="chart-meta"><span class="chart-total">${money(salesTotal)}</span><span class="chart-caption">Monthly sales · last 6 months</span></div><div class="chart" aria-label="Sales chart for the last six months">${months.map((item, index) => `<div class="bar-group"><div class="bar ${index === months.length - 1 ? 'current' : ''}" style="--height:${Math.max(item.amount / max * 100, 3)}%" title="${escapeHtml(item.label)}: ${money(item.amount)}"></div><span class="bar-label">${escapeHtml(item.label)}</span></div>`).join('')}</div></div></section>
+          <section class="panel"><div class="panel-head"><h2>Monica, on the shelf</h2><span class="eyebrow" style="margin:0">Our label</span></div><div class="product-spotlight"><div class="product-copy"><div class="eyebrow">A ROYAL SULTHAN brand</div><h2>Monica Premium<br />Tea Powder</h2><p>Rich colour. Full-bodied taste.<br />Made for the everyday cup.</p></div><div class="tea-tin" aria-label="Illustration of a Monica tea tin"><div class="tin-label"><small>ROYAL SULTHAN</small>MONICA<br />PREMIUM TEA</div></div></div><div class="panel-body"><div class="mix-list"><div><div class="mix-row"><span class="mix-label"><i class="dot"></i>1 kg packs</span><span class="mix-value">${data.sales.filter(item => item.product.includes('1 kg')).reduce((n, item) => n + Number(item.quantity), 0)} sold</span></div><div class="mix-track"><div class="mix-fill" style="--width:64%"></div></div></div><div><div class="mix-row"><span class="mix-label"><i class="dot gold"></i>500 g packs</span><span class="mix-value">${data.sales.filter(item => item.product.includes('500 g')).reduce((n, item) => n + Number(item.quantity), 0)} sold</span></div><div class="mix-track"><div class="mix-fill gold" style="--width:43%"></div></div></div><div><div class="mix-row"><span class="mix-label"><i class="dot rose"></i>250 g packs</span><span class="mix-value">${data.sales.filter(item => item.product.includes('250 g')).reduce((n, item) => n + Number(item.quantity), 0)} sold</span></div><div class="mix-track"><div class="mix-fill rose" style="--width:28%"></div></div></div></div></div></section>
+        </div>
+        <div class="lower-grid"><section class="panel"><div class="panel-head"><h2>Latest sales</h2><a href="#sales">View ledger →</a></div><div class="table-wrap"><table><thead><tr><th>Customer</th><th>Date</th><th>Amount</th><th>Payment</th></tr></thead><tbody>${recent.length ? recent.map(sale => `<tr><td data-label="Customer"><div class="customer-cell"><span class="mini-avatar">${escapeHtml(initials(customerName(sale.customerId)))}</span><span>${escapeHtml(customerName(sale.customerId))}</span></div></td><td class="muted" data-label="Date">${niceDate(sale.date)}</td><td class="amount" data-label="Amount">${money(sale.amount)}</td><td data-label="Payment"><span class="status ${sale.payment === 'Pending' ? 'pending' : ''}">${escapeHtml(sale.payment)}</span></td></tr>`).join('') : '<tr><td colspan="4" class="empty-state">No sales recorded yet.</td></tr>'}</tbody></table></div></section><section class="panel"><div class="panel-head"><h2>Owner's note</h2><a href="#customers">Customers →</a></div><div class="panel-body"><div class="quick-note"><strong>${escapeHtml(data.customers[0]?.name || 'Your customers')}</strong>${escapeHtml(data.customers[0]?.note || 'Add a customer note to keep important follow-ups close at hand.')}</div><div style="display:flex;justify-content:space-between;margin-top:17px;font-size:11px"><span class="muted">Customer book</span><strong>${data.customers.length} saved</strong></div><div style="display:flex;justify-content:space-between;margin-top:11px;font-size:11px"><span class="muted">Latest expense</span><strong>${data.expenses.length ? money([...data.expenses].sort((a,b) => b.date.localeCompare(a.date))[0].amount) : money(0)}</strong></div></div></section></div>`;
     }
 
-    operator = op;
-    waitingForOperand = true;
-
-    const opSymbol = { '+': '+', '-': '−', '*': '×', '/': '÷' }[op];
-    expression = previousValue + ' ' + opSymbol;
-    updateDisplay();
-  }
-
-  function calculate() {
-    if (!operator || waitingForOperand) return;
-
-    const prev = parseFloat(previousValue);
-    const current = parseFloat(currentValue);
-    const opSymbol = { '+': '+', '-': '−', '*': '×', '/': '÷' }[operator];
-
-    expression = previousValue + ' ' + opSymbol + ' ' + currentValue + ' =';
-    const result = compute(prev, current, operator);
-    currentValue = formatResult(result);
-    operator = null;
-    previousValue = '';
-    waitingForOperand = true;
-    updateDisplay();
-  }
-
-  function compute(a, b, op) {
-    switch (op) {
-      case '+': return a + b;
-      case '-': return a - b;
-      case '*': return a * b;
-      case '/': return b !== 0 ? a / b : 'Error';
-      default: return b;
+    function renderCustomers(query = '') {
+      const needle = query.toLowerCase();
+      const customers = data.customers.filter(customer => [customer.name, customer.phone, customer.location, customer.note].join(' ').toLowerCase().includes(needle));
+      document.getElementById('customers-view').innerHTML = `<div class="page-heading"><div><div class="eyebrow">Relationships are the real ledger</div><h1>Customer book</h1><p>People, places, and the details worth remembering.</p></div><div class="actions"><button class="button" data-action="add-customer">+ Add customer note</button></div></div><div class="toolbar"><label class="search"><span>⌕</span><input id="customer-search" type="search" placeholder="Find a customer or note" value="${escapeHtml(query)}" /></label><span class="count">${customers.length} of ${data.customers.length} customers</span></div><section class="table-panel"><div class="table-title"><h2>Customer notes</h2><span class="count">Saved on this device</span></div><div class="table-wrap"><table><thead><tr><th>Customer</th><th>Phone</th><th>Location</th><th>Owner's note</th><th>Added</th></tr></thead><tbody>${customers.length ? customers.map(customer => `<tr><td data-label="Customer"><div class="customer-cell"><span class="mini-avatar">${escapeHtml(initials(customer.name))}</span><strong>${escapeHtml(customer.name)}</strong></div></td><td data-label="Phone">${escapeHtml(customer.phone || '—')}</td><td data-label="Location">${escapeHtml(customer.location || '—')}</td><td class="note-cell" data-label="Owner's note" title="${escapeHtml(customer.note)}">${escapeHtml(customer.note || '—')}</td><td class="muted" data-label="Added">${niceDate(customer.created)}</td></tr>`).join('') : '<tr><td colspan="5" class="empty-state">No matching customers. Add one to your book.</td></tr>'}</tbody></table></div></section>`;
+      document.getElementById('customer-search')?.addEventListener('input', event => {
+        const query = event.target.value;
+        const cursor = event.target.selectionStart;
+        renderCustomers(query);
+        const search = document.getElementById('customer-search');
+        search.focus();
+        search.setSelectionRange(cursor, cursor);
+      });
     }
-  }
 
-  function formatResult(value) {
-    if (value === 'Error') return 'Error';
-    // Avoid floating point display issues
-    const str = parseFloat(value.toFixed(10)).toString();
-    return str;
-  }
-
-  function clearAll() {
-    currentValue = '0';
-    previousValue = '';
-    operator = null;
-    waitingForOperand = false;
-    expression = '';
-    updateDisplay();
-  }
-
-  function toggleSign() {
-    if (currentValue === '0' || currentValue === 'Error') return;
-    currentValue = currentValue.startsWith('-')
-      ? currentValue.slice(1)
-      : '-' + currentValue;
-    updateDisplay();
-  }
-
-  function percent() {
-    const value = parseFloat(currentValue);
-    currentValue = formatResult(value / 100);
-    updateDisplay();
-  }
-
-  // Keyboard support
-  document.addEventListener('keydown', (e) => {
-    if (e.key >= '0' && e.key <= '9') inputDigit(e.key);
-    else if (e.key === '.') inputDecimal();
-    else if (e.key === '+') inputOperator('+');
-    else if (e.key === '-') inputOperator('-');
-    else if (e.key === '*') inputOperator('*');
-    else if (e.key === '/') { e.preventDefault(); inputOperator('/'); }
-    else if (e.key === 'Enter' || e.key === '=') calculate();
-    else if (e.key === 'Escape') clearAll();
-    else if (e.key === 'Backspace') {
-      if (currentValue.length > 1) {
-        currentValue = currentValue.slice(0, -1);
-      } else {
-        currentValue = '0';
-      }
-      updateDisplay();
+    function renderSales() {
+      const list = [...data.sales].sort((a, b) => b.date.localeCompare(a.date));
+      const current = monthSales();
+      document.getElementById('sales-view').innerHTML = `<div class="page-heading"><div><div class="eyebrow">Monica Premium · order book</div><h1>Sales ledger</h1><p>Track orders and keep an eye on payments due.</p></div><div class="actions"><button class="button" data-action="add-sale">+ Record sale</button></div></div><div class="summary-strip"><div class="summary-item"><span>This month</span><strong>${money(sum(current))}</strong></div><i class="summary-divider"></i><div class="summary-item"><span>Orders</span><strong>${current.length}</strong></div><i class="summary-divider"></i><div class="summary-item"><span>Outstanding</span><strong>${money(sum(current.filter(item => item.payment === 'Pending')))}</strong></div></div><section class="table-panel"><div class="table-title"><h2>All sales</h2><span class="count">${list.length} ${list.length === 1 ? 'entry' : 'entries'}</span></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Customer</th><th>Product</th><th>Qty</th><th>Amount</th><th>Payment</th></tr></thead><tbody>${list.length ? list.map(sale => `<tr><td data-label="Date">${niceDate(sale.date)}</td><td data-label="Customer"><strong>${escapeHtml(customerName(sale.customerId))}</strong></td><td data-label="Product">${escapeHtml(sale.product)}</td><td data-label="Qty">${Number(sale.quantity)}</td><td class="amount" data-label="Amount">${money(sale.amount)}</td><td data-label="Payment"><span class="status ${sale.payment === 'Pending' ? 'pending' : ''}">${escapeHtml(sale.payment)}</span></td></tr>`).join('') : '<tr><td colspan="6" class="empty-state">No sales yet. Record the first Monica order.</td></tr>'}</tbody></table></div></section>`;
     }
-  });
-</script>
 
+    function renderExpenses() {
+      const list = [...data.expenses].sort((a, b) => b.date.localeCompare(a.date));
+      const current = monthExpenses();
+      const categories = new Set(current.map(item => item.category));
+      document.getElementById('expenses-view').innerHTML = `<div class="page-heading"><div><div class="eyebrow">Every rupee has a place</div><h1>Expense book</h1><p>Record the running costs behind every good cup.</p></div><div class="actions"><button class="button" data-action="add-expense">+ Add expense</button></div></div><div class="summary-strip"><div class="summary-item"><span>This month</span><strong>${money(sum(current))}</strong></div><i class="summary-divider"></i><div class="summary-item"><span>Entries</span><strong>${current.length}</strong></div><i class="summary-divider"></i><div class="summary-item"><span>Categories</span><strong>${categories.size}</strong></div></div><section class="table-panel"><div class="table-title"><h2>All expenses</h2><span class="count">${list.length} ${list.length === 1 ? 'entry' : 'entries'}</span></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Category</th><th>Description</th><th>Amount</th></tr></thead><tbody>${list.length ? list.map(item => `<tr><td data-label="Date">${niceDate(item.date)}</td><td data-label="Category"><span class="status">${escapeHtml(item.category)}</span></td><td data-label="Description">${escapeHtml(item.description)}</td><td class="amount" data-label="Amount">${money(item.amount)}</td></tr>`).join('') : '<tr><td colspan="4" class="empty-state">No expenses recorded yet.</td></tr>'}</tbody></table></div></section>`;
+    }
+
+    function render() {
+      const route = location.hash.slice(1) || 'overview';
+      const active = ['overview', 'customers', 'sales', 'expenses'].includes(route) ? route : 'overview';
+      document.querySelectorAll('[data-view]').forEach(view => view.classList.toggle('hidden', view.dataset.view !== active));
+      document.querySelectorAll('[data-route]').forEach(link => link.classList.toggle('active', link.dataset.route === active));
+      document.getElementById('route-label').textContent = active[0].toUpperCase() + active.slice(1);
+      if (active === 'overview') renderOverview();
+      if (active === 'customers') renderCustomers(document.getElementById('customer-search')?.value || '');
+      if (active === 'sales') renderSales();
+      if (active === 'expenses') renderExpenses();
+    }
+
+    function openModal(type) {
+      const forms = {
+        customer: { title: 'Add customer note', fields: `<div class="field"><label for="name">Customer name *</label><input id="name" name="name" required placeholder="Shop or contact name" /></div><div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" placeholder="Phone number" /></div><div class="field"><label for="location">Location</label><input id="location" name="location" placeholder="Town or area" /></div><div class="field full"><label for="note">Owner's note</label><textarea id="note" name="note" placeholder="Preferences, follow-up, delivery details..."></textarea></div>` },
+        sale: { title: 'Record a sale', fields: `<div class="field"><label for="customerId">Customer *</label><select id="customerId" name="customerId" required>${data.customers.length ? data.customers.map(customer => `<option value="${escapeHtml(customer.id)}">${escapeHtml(customer.name)}</option>`).join('') : '<option value="">Add a customer first</option>'}</select></div><div class="field"><label for="date">Sale date *</label><input id="date" name="date" type="date" value="${isoDate()}" required /></div><div class="field full"><label for="product">Product *</label><select id="product" name="product"><option>Monica Premium Tea Powder · 250 g</option><option>Monica Premium Tea Powder · 500 g</option><option selected>Monica Premium Tea Powder · 1 kg</option></select></div><div class="field"><label for="quantity">Quantity *</label><input id="quantity" name="quantity" type="number" min="1" step="1" value="1" required /></div><div class="field"><label for="amount">Total amount (₹) *</label><input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required /></div><div class="field full"><label for="payment">Payment status</label><select id="payment" name="payment"><option>Paid</option><option>Pending</option></select></div>` },
+        expense: { title: 'Add an expense', fields: `<div class="field"><label for="date">Date *</label><input id="date" name="date" type="date" value="${isoDate()}" required /></div><div class="field"><label for="category">Category *</label><select id="category" name="category"><option>Stock purchase</option><option>Packaging</option><option>Delivery</option><option>Utilities</option><option>Wages</option><option>Marketing</option><option>Other</option></select></div><div class="field full"><label for="description">Description *</label><input id="description" name="description" placeholder="What was this expense for?" required /></div><div class="field"><label for="amount">Amount (₹) *</label><input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required /></div>` }
+      }[type];
+      document.getElementById('modal-root').innerHTML = `<div class="modal-backdrop" data-close-modal><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><header class="modal-head"><h2 id="modal-title">${forms.title}</h2><button class="close-button" type="button" aria-label="Close" data-close-modal>×</button></header><form class="modal-form" id="entry-form"><div class="form-grid">${forms.fields}</div><div class="form-actions"><button type="button" class="button secondary" data-close-modal>Cancel</button><button class="button" type="submit">Save ${type === 'customer' ? 'customer' : type}</button></div></form></section></div>`;
+      document.querySelector('#entry-form input, #entry-form select')?.focus();
+      document.getElementById('entry-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const values = Object.fromEntries(new FormData(event.currentTarget));
+        if (type === 'customer') data.customers.unshift({ ...values, id: `c${Date.now()}`, created: isoDate() });
+        if (type === 'sale') {
+          if (!values.customerId) return;
+          data.sales.unshift({ ...values, id: `s${Date.now()}`, quantity: Number(values.quantity), amount: Number(values.amount) });
+        }
+        if (type === 'expense') data.expenses.unshift({ ...values, id: `e${Date.now()}`, amount: Number(values.amount) });
+        save();
+        document.getElementById('modal-root').innerHTML = '';
+        render();
+        showToast(type === 'customer' ? 'Customer note saved' : type === 'sale' ? 'Sale recorded' : 'Expense saved');
+      });
+    }
+    function showToast(message) {
+      const root = document.getElementById('toast-root');
+      root.innerHTML = `<div class="toast">${escapeHtml(message)}</div>`;
+      setTimeout(() => { root.innerHTML = ''; }, 2600);
+    }
+    document.addEventListener('click', event => {
+      const action = event.target.closest('[data-action]')?.dataset.action;
+      if (action) openModal(action.replace('add-', ''));
+      if (event.target.matches('[data-close-modal]')) document.getElementById('modal-root').innerHTML = '';
+    });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') document.getElementById('modal-root').innerHTML = ''; });
+    window.addEventListener('hashchange', render);
+    render();
+  </script>
 </body>
 </html>
