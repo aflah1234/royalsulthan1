@@ -12,6 +12,8 @@
     @media(max-width:1050px){.content{padding:30px 26px}.topbar{padding:0 26px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.overview-grid,.lower-grid{grid-template-columns:1fr}.product-spotlight{min-height:160px}}
     @media(max-width:680px){.sidebar{inset:auto 0 0;width:100%;height:64px;padding:5px 8px;flex-direction:row;justify-content:center}.brand,.nav-label,.sidebar-bottom{display:none}.nav{width:100%;grid-template-columns:repeat(4,1fr);gap:3px}.nav-link{height:54px;padding:5px 2px;flex-direction:column;gap:2px;justify-content:center;font-size:9px}.nav-icon{font-size:16px}.main{margin-left:0;padding-bottom:64px}.topbar{height:58px;padding:0 17px}.content{padding:25px 16px 32px}.page-heading{align-items:flex-start;flex-direction:column;margin-bottom:19px}.page-heading h1{font-size:29px}.page-heading p{font-size:12px}.actions{width:100%}.actions .button{flex:1}.metrics{gap:9px}.metric{padding:14px;min-height:100px}.metric-value{font-size:23px}.overview-grid,.lower-grid{gap:12px}.panel-head,.panel-body{padding-left:15px;padding-right:15px}.chart{gap:7px}.bar{width:min(20px,70%)}.toolbar{align-items:stretch;flex-wrap:wrap}.search{max-width:none;flex-basis:100%}.summary-strip{gap:14px;justify-content:space-between;padding:12px}.summary-item strong{font-size:15px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.today{display:none}.table-title{padding:15px}.table-panel table{min-width:650px}.panel table{min-width:570px}}
     @media(max-width:680px){.table-wrap table{display:block;min-width:0;width:100%;white-space:normal}.table-wrap thead{display:none}.table-wrap tbody{display:block}.table-wrap tbody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 12px;padding:10px 14px;border-bottom:1px solid var(--line)}.table-wrap tbody td{min-width:0;padding:5px 0;border:0;white-space:normal;overflow-wrap:anywhere;font-size:11px}.table-wrap tbody td:before{content:attr(data-label);display:block;color:#8c948c;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}.table-wrap tbody td[data-label="Description"],.table-wrap tbody td[data-label="Owner's note"]{grid-column:1/-1}.table-wrap tbody td .customer-cell{font-size:11px}.table-wrap tbody td .mini-avatar{width:25px;height:25px}}
+    .statement-download{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;white-space:nowrap}.statement-download .download-icon{font-size:17px;line-height:10px}
+    @media(max-width:680px){.statement-download{height:34px;padding:5px 9px}.statement-download .download-label{display:none}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
   </style>
 </head>
@@ -29,7 +31,7 @@
       <div class="sidebar-bottom"><strong>Monica Premium</strong>Tea Powder<br />Owner ledger · 2026</div>
     </aside>
     <main class="main">
-      <header class="topbar"><div class="crumb">ROYAL SULTHAN <span aria-hidden="true">/</span> <b id="route-label">Overview</b></div><div class="top-right"><span class="today" id="today"></span><span class="avatar" aria-label="Owner">RS</span></div></header>
+      <header class="topbar"><div class="crumb">ROYAL SULTHAN <span aria-hidden="true">/</span> <b id="route-label">Overview</b></div><div class="top-right"><span class="today" id="today"></span><button class="button secondary statement-download" id="download-statement" type="button" title="Download full statement"><span class="download-icon" aria-hidden="true">↓</span><span class="download-label">Download statement</span></button><span class="avatar" aria-label="Owner">RS</span></div></header>
       <div class="content">
         <section class="route-view" data-view="overview" id="overview-view"></section>
         <section class="route-view hidden" data-view="customers" id="customers-view"></section>
@@ -172,6 +174,30 @@
         showToast(type === 'customer' ? 'Customer note saved' : type === 'sale' ? 'Sale recorded' : 'Expense saved');
       });
     }
+    function csvField(value) {
+      const text = String(value ?? '');
+      const safe = /^[\t\r ]*[=+\-@]/.test(text) ? `'${text}` : text;
+      return `"${safe.replace(/"/g, '""')}"`;
+    }
+    function downloadStatement() {
+      const header = ['Record type', 'Date', 'Customer', 'Phone', 'Location', 'Product or category', 'Description', 'Quantity', 'Amount (INR)', 'Payment status', 'Notes'];
+      const customerRows = data.customers.map(customer => ['Customer', customer.created, customer.name, customer.phone, customer.location, '', '', '', '', '', customer.note]);
+      const saleRows = data.sales.map(sale => {
+        const customer = data.customers.find(item => item.id === sale.customerId) || {};
+        return ['Sale', sale.date, customer.name || 'Walk-in customer', customer.phone, customer.location, sale.product, '', sale.quantity, sale.amount, sale.payment, ''];
+      });
+      const expenseRows = data.expenses.map(expense => ['Expense', expense.date, '', '', '', expense.category, expense.description, '', expense.amount, '', '']);
+      const rows = [...customerRows, ...saleRows, ...expenseRows].sort((first, second) => String(second[1] || '').localeCompare(String(first[1] || '')));
+      const csv = [header, ...rows].map(row => row.map(csvField).join(',')).join('\r\n');
+      const blob = new Blob(['\uFEFF', csv], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `royal-sulthan-monica-statement-${isoDate()}.csv`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast('Full statement downloaded');
+    }
     function showToast(message) {
       const root = document.getElementById('toast-root');
       root.innerHTML = `<div class="toast">${escapeHtml(message)}</div>`;
@@ -182,6 +208,7 @@
       if (action) openModal(action.replace('add-', ''));
       if (event.target.matches('[data-close-modal]')) document.getElementById('modal-root').innerHTML = '';
     });
+    document.getElementById('download-statement').addEventListener('click', downloadStatement);
     document.addEventListener('keydown', event => { if (event.key === 'Escape') document.getElementById('modal-root').innerHTML = ''; });
     window.addEventListener('hashchange', render);
     render();
